@@ -17,14 +17,15 @@ namespace ChillyCgi
 
             GeoLocale locale = localeClient.GetIPLocale(ip);
 
-            var forecast = client.GetForecast(locale);
+            var forecast = client.GetForecast(locale, (locale.Country != "US"));
             
             Console.Write("20 text/gemini\r\n");
 
-            Renderer renderer = new Renderer(Console.Out);
+            GeminiRenderer renderer = new GeminiRenderer(Console.Out);
             renderer.Render(forecast);
 
             int x = 4;
         }
+
     }
 }
