@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.19
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChillyCgi", "ChillyCgi.csproj", "{0BEA4095-C4E0-452C-857B-062CCECFE7B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chilly", "..\ChillyWeather\Chilly.csproj", "{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BEA4095-C4E0-452C-857B-062CCECFE7B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BEA4095-C4E0-452C-857B-062CCECFE7B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BEA4095-C4E0-452C-857B-062CCECFE7B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BEA4095-C4E0-452C-857B-062CCECFE7B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {453E6860-2814-426C-8F2F-95AF5AB99D1A}
+	EndGlobalSection
+EndGlobal
