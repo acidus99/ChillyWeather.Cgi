@@ -26,6 +26,18 @@ namespace ChillyCgi
 
 
             Fout.WriteLine($"# Weather for {forecast.Location.Name} @ {formatter.FormatTime(forecast.Current.Time)}");
+
+            Fout.WriteLine("=> /cgi-bin/chilly.cgi/search Wrong Location? Search");
+
+            if (formatter.IsMetric)
+            {
+                Fout.WriteLine("=> ?f Use Fahrenheit");
+            }
+            else
+            {
+                Fout.WriteLine("=> ?c Use Celsius");
+            }
+
             Fout.WriteLine($"Now: {formatter.EmojiForCurrentWeather(forecast.Current)} {formatter.FormatTemp(forecast.Current.Temp)} {formatter.FormatDescription(forecast.Current.Weather)}");
             Fout.WriteLine();
             Fout.WriteLine("## Next 24 hours");
