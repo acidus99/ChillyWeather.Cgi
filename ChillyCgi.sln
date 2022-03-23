@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChillyCgi", "ChillyCgi.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chilly", "..\ChillyWeather\Chilly.csproj", "{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gemini.Cgi", "..\Gemini.Cgi\Gemini.Cgi.csproj", "{FF69D4E9-DEED-443A-9EA6-DADF6CB4627D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C22BD2C-4D70-473A-88B7-D0D9B55DFAC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF69D4E9-DEED-443A-9EA6-DADF6CB4627D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF69D4E9-DEED-443A-9EA6-DADF6CB4627D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF69D4E9-DEED-443A-9EA6-DADF6CB4627D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF69D4E9-DEED-443A-9EA6-DADF6CB4627D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

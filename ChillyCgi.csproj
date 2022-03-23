@@ -8,9 +8,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChillyWeather\Chilly.csproj" />
+    <ProjectReference Include="..\Gemini.Cgi\Gemini.Cgi.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove=".gitattributes" />
     <None Remove=".gitignore" />
+    <None Remove="LICENSE" />
+    <None Remove="README.md" />
+    <None Remove="Newtonsoft.Json" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>

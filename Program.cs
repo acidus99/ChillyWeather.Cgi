@@ -2,30 +2,140 @@
 using Chilly.Clients;
 using Chilly.Models;
 using Chilly;
+using System.IO;
+using System.Collections.Specialized;
+
+using System.Linq;
+using System.Web;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+using Gemini.Cgi;
 
 namespace ChillyCgi
 {
     class Program
     {
+        const string chillyPath = "/cgi-bin/chilly.cgi";
+
         static void Main(string[] args)
         {
-            IWeatherClient client = ClientForge.ConfigureWeatherClient();
+            CgiRouter router = new CgiRouter();
 
-            ILocaleClient localeClient = new FreeIpApiClient();
-
-            string ip = Environment.GetEnvironmentVariable("REMOTE_ADDR") ?? "";
-
-            GeoLocale locale = localeClient.GetIPLocale(ip);
-
-            var forecast = client.GetForecast(locale, (locale.Country != "US"));
-            
-            Console.Write("20 text/gemini\r\n");
-
-            GeminiRenderer renderer = new GeminiRenderer(Console.Out);
-            renderer.Render(forecast);
+            router.OnRequest("/search", Search);
+            router.OnRequest("/view", WeatherForLocale);
+            router.OnRequest("", WeatherForCurrentLocation);
+            router.ProcessRequest();
 
             int x = 4;
         }
 
+        static void WeatherForCurrentLocation(CgiWrapper cgi)
+        {
+            ILocaleClient localeClient = new FreeIpApiClient();
+            string ip = GetRemoteIP(cgi);
+
+            GeoLocale locale = localeClient.GetIPLocale(ip);
+            RenderWeather(cgi, locale);
+        }
+
+        static void Search(CgiWrapper cgi)
+        {
+            if(!cgi.HasQuery)
+            {
+                cgi.Input("Enter Location to search for weather forecast");
+                return;
+            }
+
+            IWeatherClient client = ClientForge.ConfigureWeatherClient();
+            var locales = client.LookupLocale(cgi.Query.Trim());
+
+            cgi.Success();
+            cgi.WriteLine("## Discovered locations");
+            if (locales.Count > 0)
+            {
+                foreach (var locale in locales)
+                {
+                    cgi.WriteLine($"=> {chillyPath}/view/{HttpUtility.UrlEncode(GeoToString(locale))}/ {locale.Name}, {locale.State}, {locale.Country}");
+                }
+            } else
+            {
+                cgi.WriteLine("No results found");
+            }
+            cgi.WriteLine($"--");
+            cgi.WriteLine($"=> {chillyPath}/search Search Again");
+            cgi.WriteLine($"=> {chillyPath} Use Current Location");
+        }
+
+        static string GeoToString(GeoLocale locale)
+        {
+            NameValueCollection query = new NameValueCollection();
+            query["lon"] = locale.Longitude.ToString();
+            query["lat"] = locale.Latitude.ToString();
+            query["name"] = locale.Name;
+            query["state"] = locale.State;
+            query["country"] = locale.Country;
+            return string.Join("&", query.AllKeys.Select(key => string.Format("{0}={1}", HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(query[key]))));
+        }
+
+
+        static GeoLocale GetGeo(CgiWrapper cgi)
+        {
+            try
+            {
+                var locale = cgi.PathInfo.Substring(6, cgi.PathInfo.Length - 7);
+                var query = HttpUtility.ParseQueryString(locale);
+                return new GeoLocale
+                {
+                    Longitude = Convert.ToSingle(query["lon"]),
+                    Latitude = Convert.ToSingle(query["lat"]),
+                    Name = query["name"],
+                    State = query["state"],
+                    Country = query["country"]
+                };
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        static void WeatherForLocale(CgiWrapper cgi)
+        {
+
+            var locale = GetGeo(cgi);
+            if(locale == null)
+            {
+                cgi.Success();
+                cgi.WriteLine("could not find location");
+                return;
+            }
+            RenderWeather(cgi, locale);
+        }
+
+        static void RenderWeather(CgiWrapper cgi, GeoLocale locale)
+        {
+            IWeatherClient client = ClientForge.ConfigureWeatherClient();
+
+            bool isMetric = (locale.Country != "US");
+
+            if (cgi.Query == "c")
+            {
+                isMetric = true;
+            }
+            else if (cgi.Query == "f")
+            {
+                isMetric = false;
+            }
+
+            var forecast = client.GetForecast(locale, isMetric);
+            cgi.Success();
+
+            GeminiRenderer renderer = new GeminiRenderer(cgi.Out);
+            renderer.Render(forecast);
+        }
+
+        static string GetRemoteIP(CgiWrapper cgi)
+            => cgi.RemoteAddress == "127.0.01" ? "" : cgi.RemoteAddress;
     }
 }
