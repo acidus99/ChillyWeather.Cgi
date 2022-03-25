@@ -51,20 +51,20 @@ namespace ChillyCgi
             var locales = client.LookupLocale(cgi.Query.Trim());
 
             cgi.Success();
-            cgi.WriteLine("## Discovered locations");
+            cgi.Writer.WriteLine("## Discovered locations");
             if (locales.Count > 0)
             {
                 foreach (var locale in locales)
                 {
-                    cgi.WriteLine($"=> {chillyPath}/view/{HttpUtility.UrlEncode(GeoToString(locale))}/ {locale.Name}, {locale.State}, {locale.Country}");
+                    cgi.Writer.WriteLine($"=> {chillyPath}/view/{HttpUtility.UrlEncode(GeoToString(locale))}/ {locale.Name}, {locale.State}, {locale.Country}");
                 }
             } else
             {
-                cgi.WriteLine("No results found");
+                cgi.Writer.WriteLine("No results found");
             }
-            cgi.WriteLine($"--");
-            cgi.WriteLine($"=> {chillyPath}/search Search Again");
-            cgi.WriteLine($"=> {chillyPath} Use Current Location");
+            cgi.Writer.WriteLine($"--");
+            cgi.Writer.WriteLine($"=> {chillyPath}/search Search Again");
+            cgi.Writer.WriteLine($"=> {chillyPath} Use Current Location");
         }
 
         static string GeoToString(GeoLocale locale)
@@ -107,7 +107,7 @@ namespace ChillyCgi
             if(locale == null)
             {
                 cgi.Success();
-                cgi.WriteLine("could not find location");
+                cgi.Writer.WriteLine("could not find location");
                 return;
             }
             RenderWeather(cgi, locale);
@@ -131,7 +131,7 @@ namespace ChillyCgi
             var forecast = client.GetForecast(locale, isMetric);
             cgi.Success();
 
-            GeminiRenderer renderer = new GeminiRenderer(cgi.Out);
+            GeminiRenderer renderer = new GeminiRenderer(cgi.Writer);
             renderer.Render(forecast);
         }
 
