@@ -66,7 +66,7 @@ namespace ChillyCgi
             Fout.WriteLine("## Next 7 Days");
             foreach(DailyCondition daily in forecast.Daily)
             {
-                if (daily.Time < forecast.Current.Time)
+                if (daily.Time.Date <= forecast.Current.Time.Date)
                 {
                     continue;
                 }
