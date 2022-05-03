@@ -20,6 +20,12 @@ namespace ChillyCgi
 
         static void Main(string[] args)
         {
+            if(!CgiWrapper.IsRunningAsCgi)
+            {
+                TestLocal();
+                return;
+            }
+
             CgiRouter router = new CgiRouter();
 
             router.OnRequest("/search", Search);
@@ -28,6 +34,24 @@ namespace ChillyCgi
             router.ProcessRequest();
 
             int x = 4;
+        }
+
+        static void TestLocal()
+        {
+            using (var cgi = new CgiWrapper())
+            { 
+                WeatherForCurrentLocation(cgi);
+            }
+            GeoLocale locale = new GeoLocale
+            {
+                Latitude = 44.0077859,
+                Longitude = -97.6962364,
+                Country = "US"
+            };
+
+            var client = ClientForge.ConfigureWeatherClient();
+            client.GetForecast(locale);
+
         }
 
         static void WeatherForCurrentLocation(CgiWrapper cgi)
