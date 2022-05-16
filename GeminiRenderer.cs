@@ -24,7 +24,6 @@ namespace ChillyCgi
         {
             formatter.IsMetric = forecast.IsMetric;
 
-
             Fout.WriteLine($"# Weather for {forecast.Location.Name} @ {formatter.FormatTime(forecast.Current.Time)}");
 
             Fout.WriteLine("=> /cgi-bin/chilly.cgi/search Wrong Location? Search");
@@ -39,6 +38,16 @@ namespace ChillyCgi
             }
 
             Fout.WriteLine($"Now: {formatter.EmojiForWeather(forecast.Current.Weather.Type, forecast.IsSunCurrentlyUp)} {formatter.FormatTemp(forecast.Current.Temp)} {formatter.FormatDescription(forecast.Current.Weather)}");
+            var remainingToday = forecast.GetRemainingToday();
+            if(remainingToday.RemainingHours > 4)
+            {
+                Fout.Write($"Rest of Today: {formatter.FormatTemp(remainingToday.LowTemp)} to {formatter.FormatTemp(remainingToday.HighTemp)}");
+                if(remainingToday.ChanceOfPrecipitation > 0)
+                {
+                    Fout.Write($"💧 {formatter.FormatChance(remainingToday.ChanceOfPrecipitation)}");
+                }
+                Fout.WriteLine();
+            }
             Fout.WriteLine();
             Fout.WriteLine("## Next 24 hours");
             //skip every other hour
@@ -55,7 +64,6 @@ namespace ChillyCgi
                 if(hour.ChanceOfPrecipitation != 0)
                 {
                     Fout.Write($"💧 {formatter.FormatChance(hour.ChanceOfPrecipitation)} - ");
-                    
                 }
                 Fout.WriteLine(formatter.FormatDescription(hour.Weather));
             }
