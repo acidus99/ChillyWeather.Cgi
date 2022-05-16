@@ -101,9 +101,9 @@ namespace ChillyCgi
             if (OccurredBetween(lastUpdate, hour.Time, daily.Sunrise))
             {
                 Fout.WriteLine($"* {formatter.FormatTime(daily.Sunrise)}: 🌅 Sunrise");
-            } else if (OccurredBetween(lastUpdate, hour.Time, daily.Sunrise))
+            } else if (OccurredBetween(lastUpdate, hour.Time, daily.Sunset))
             {
-                Fout.WriteLine($"* {formatter.FormatTime(daily.Sunrise)}: 🌅 Sunset");
+                Fout.WriteLine($"* {formatter.FormatTime(daily.Sunset)}: 🌅 Sunset");
             }
         }
 
