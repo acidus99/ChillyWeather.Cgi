@@ -39,7 +39,6 @@ namespace ChillyCgi
             }
 
             Fout.WriteLine($"Now: {formatter.EmojiForWeather(forecast.Current.Weather.Type, forecast.IsSunCurrentlyUp)} {formatter.FormatTemp(forecast.Current.Temp)} {formatter.FormatDescription(forecast.Current.Weather)}");
-            Fout.WriteLine($"Today: ");
             Fout.WriteLine();
             Fout.WriteLine("## Next 24 hours");
             //skip every other hour
