@@ -38,10 +38,10 @@ namespace ChillyCgi
                 Fout.WriteLine("=> ?c Use Celsius");
             }
 
-            Fout.WriteLine($"Now: {formatter.EmojiForCurrentWeather(forecast.Current)} {formatter.FormatTemp(forecast.Current.Temp)} {formatter.FormatDescription(forecast.Current.Weather)}");
+            Fout.WriteLine($"Now: {formatter.EmojiForWeather(forecast.Current.Weather.Type, forecast.IsSunCurrentlyUp)} {formatter.FormatTemp(forecast.Current.Temp)} {formatter.FormatDescription(forecast.Current.Weather)}");
+            Fout.WriteLine($"Today: ");
             Fout.WriteLine();
             Fout.WriteLine("## Next 24 hours");
-            //TODO: add a summary here
             //skip every other hour
             int i = 0;
             foreach (HourlyCondition hour in forecast.Hourly.Skip(2).Take(24))
@@ -52,7 +52,7 @@ namespace ChillyCgi
                     continue;
                 }
 
-                Fout.Write($"* {formatter.FormatHour(hour.Time)}: {formatter.EmojiForWeather(hour.Weather.Type)} {formatter.FormatTemp(hour.Temp)} ");
+                Fout.Write($"* {formatter.FormatHour(hour.Time)}: {formatter.EmojiForWeather(hour.Weather.Type, forecast.IsSunUp(hour.Time))} {formatter.FormatTemp(hour.Temp)} ");
                 if(hour.ChanceOfPrecipitation != 0)
                 {
                     Fout.Write($"💧 {formatter.FormatChance(hour.ChanceOfPrecipitation)} - ");
