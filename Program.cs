@@ -39,8 +39,8 @@ namespace ChillyCgi
         static void TestLocal()
         {
             using (var cgi = new CgiWrapper())
-            { 
-                WeatherForCurrentLocation(cgi);
+            {
+                WeatherForLocale(cgi);
             }
             GeoLocale locale = new GeoLocale
             {
