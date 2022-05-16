@@ -24,7 +24,7 @@ namespace ChillyCgi
         {
             formatter.IsMetric = forecast.IsMetric;
 
-            Fout.WriteLine($"# Weather for {forecast.Location.Name} @ {formatter.FormatTime(forecast.Current.Time)}");
+            Fout.WriteLine($"# Weather for {forecast.Location.Name} @ {formatter.FormatDayTime(forecast.Current.Time)}");
 
             Fout.WriteLine("=> /cgi-bin/chilly.cgi/search Wrong Location? Search");
 
@@ -50,6 +50,8 @@ namespace ChillyCgi
             }
             Fout.WriteLine();
             Fout.WriteLine("## Next 24 hours");
+
+            DateTime last = DateTime.Now;
             //skip every other hour
             int i = 0;
             foreach (HourlyCondition hour in forecast.Hourly.Skip(2).Take(24))
@@ -59,13 +61,16 @@ namespace ChillyCgi
                 {
                     continue;
                 }
-
+                //get Daily condition for hour
+                var daily = forecast.GetDailyCondition(hour.Time);
+                RenderSunChange(hour, daily, last);
                 Fout.Write($"* {formatter.FormatHour(hour.Time)}: {formatter.EmojiForWeather(hour.Weather.Type, forecast.IsSunUp(hour.Time))} {formatter.FormatTemp(hour.Temp)} ");
                 if(hour.ChanceOfPrecipitation != 0)
                 {
                     Fout.Write($"💧 {formatter.FormatChance(hour.ChanceOfPrecipitation)} - ");
                 }
                 Fout.WriteLine(formatter.FormatDescription(hour.Weather));
+                last = hour.Time;
             }
 
             Fout.WriteLine();
@@ -89,5 +94,20 @@ namespace ChillyCgi
                 Fout.WriteLine();
             }
         }
+
+        private void RenderSunChange(HourlyCondition hour, DailyCondition daily, DateTime lastUpdate)
+        {
+            //did sunset occur between last and current
+            if (OccurredBetween(lastUpdate, hour.Time, daily.Sunrise))
+            {
+                Fout.WriteLine($"* {formatter.FormatTime(daily.Sunrise)}: 🌅 Sunrise");
+            } else if (OccurredBetween(lastUpdate, hour.Time, daily.Sunrise))
+            {
+                Fout.WriteLine($"* {formatter.FormatTime(daily.Sunrise)}: 🌅 Sunset");
+            }
+        }
+
+        private bool OccurredBetween(DateTime lowEnd, DateTime highEnd, DateTime check)
+            => lowEnd <= check && check <= highEnd;
     }
 }
