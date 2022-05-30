@@ -39,7 +39,7 @@ namespace ChillyCgi
 
             Fout.WriteLine($"Now: {formatter.EmojiForWeather(forecast.Current.Weather.Type, forecast.IsSunCurrentlyUp)} {formatter.FormatTemp(forecast.Current.Temp)} {formatter.FormatDescription(forecast.Current.Weather)}");
             var remainingToday = forecast.GetRemainingToday();
-            if(remainingToday.RemainingHours > 4)
+            if(remainingToday != null && remainingToday.RemainingHours > 4)
             {
                 Fout.Write($"Rest of Today: {formatter.FormatTemp(remainingToday.LowTemp)} to {formatter.FormatTemp(remainingToday.HighTemp)}");
                 if(remainingToday.ChanceOfPrecipitation > 0)
