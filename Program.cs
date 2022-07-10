@@ -30,6 +30,7 @@ namespace ChillyCgi
 
             router.OnRequest("/search", Search);
             router.OnRequest("/view", WeatherForLocale);
+            router.SetStaticRoot("static/");
             router.OnRequest("", WeatherForCurrentLocation);
             router.ProcessRequest();
 
@@ -168,7 +169,7 @@ namespace ChillyCgi
         static void Footer(CgiWrapper cgi)
         {
             cgi.Writer.WriteLine("--");
-            cgi.Writer.WriteLine($"=> {chillyPath}/static/about.gmi About ⛄️ Chilly Weather");
+            cgi.Writer.WriteLine($"=> {chillyPath}/about.gmi About ⛄️ Chilly Weather");
             cgi.Writer.WriteLine("=> mailto:acidus@gemi.dev Made with ❄️ and ❤️ by Acidus");
         }
     }
