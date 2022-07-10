@@ -67,7 +67,7 @@ namespace ChillyCgi
         {
             if(!cgi.HasQuery)
             {
-                cgi.Input("Enter Location to search for weather forecast");
+                cgi.Input("Enter Location to search for weather forecast (e.g. 'city, country' or 'city, state, country'");
                 return;
             }
 
@@ -84,11 +84,12 @@ namespace ChillyCgi
                 }
             } else
             {
-                cgi.Writer.WriteLine("No results found");
+                cgi.Writer.WriteLine("No results found. Try being more specific, such as 'city, country' or 'city, state, country'");
             }
-            cgi.Writer.WriteLine($"--");
+            cgi.Writer.WriteLine();
             cgi.Writer.WriteLine($"=> {chillyPath}/search Search Again");
             cgi.Writer.WriteLine($"=> {chillyPath} Use Current Location");
+            Footer(cgi);
         }
 
         static string GeoToString(GeoLocale locale)
@@ -135,6 +136,7 @@ namespace ChillyCgi
                 return;
             }
             RenderWeather(cgi, locale);
+            Footer(cgi);
         }
 
         static void RenderWeather(CgiWrapper cgi, GeoLocale locale)
@@ -157,9 +159,17 @@ namespace ChillyCgi
 
             GeminiRenderer renderer = new GeminiRenderer(cgi.Writer);
             renderer.Render(forecast);
+            Footer(cgi);
         }
 
         static string GetRemoteIP(CgiWrapper cgi)
             => cgi.RemoteAddress == "127.0.01" ? "" : cgi.RemoteAddress;
+
+        static void Footer(CgiWrapper cgi)
+        {
+            cgi.Writer.WriteLine("--");
+            cgi.Writer.WriteLine($"=> {chillyPath}/static/about.gmi About ⛄️ Chilly Weather");
+            cgi.Writer.WriteLine("=> mailto:acidus@gemi.dev Made with ❄️ and ❤️ by Acidus");
+        }
     }
 }
