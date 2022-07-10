@@ -24,7 +24,8 @@ namespace ChillyCgi
         {
             formatter.IsMetric = forecast.IsMetric;
 
-            Fout.WriteLine($"# Weather for {forecast.Location.Name} @ {formatter.FormatDayTime(forecast.Current.Time)}");
+            Fout.WriteLine($"# ⛄️ Chilly Weather: {forecast.Location.Name}");
+            Fout.WriteLine($"Weather for {forecast.Location.Name} @ {formatter.FormatDayTime(forecast.Current.Time)}");
 
             Fout.WriteLine("=> /cgi-bin/chilly.cgi/search Wrong Location? Search");
 
