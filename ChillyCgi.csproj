@@ -16,8 +16,18 @@
     <None Remove="LICENSE" />
     <None Remove="README.md" />
     <None Remove="Newtonsoft.Json" />
+    <None Remove="static\" />
+    <None Remove="static\about.gmi" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="static\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="static\about.gmi">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
