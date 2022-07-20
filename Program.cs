@@ -137,7 +137,6 @@ namespace ChillyCgi
                 return;
             }
             RenderWeather(cgi, locale);
-            Footer(cgi);
         }
 
         static void RenderWeather(CgiWrapper cgi, GeoLocale locale)
