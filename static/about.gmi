@@ -32,16 +32,11 @@ For IP-to-location, Chilly uses Free IP API:
 => https://freeipapi.com Free IP API
 
 Chilly also uses Gemini.Cgi, a reusable CGI framework:
-=> gemini://auragem.space/github/repo/472757281 Gemini.Cgi via Github Proxy
 => https://github.com/acidus99/Gemini.Cgi Gemini.Cgi on Github
 
 # Let me see the code!
 Sure. You can access it via Gemini or HTTP
-
-=> gemini://auragem.space/github/repo/472347102 ChillyWeather repo via @krixano's Github Proxy
 => https://github.com/acidus99/ChillyWeather ChillyWeather on Github
-
-=> gemini://auragem.space/github/repo/472349964 ChillyWeather.Cgi repo via @krixano's Github Proxy
 => https://github.com/acidus99/ChillyWeather.Cgi ChillyWeather.Cgi on Github
 
 ---
