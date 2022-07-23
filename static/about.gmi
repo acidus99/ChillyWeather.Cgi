@@ -34,7 +34,7 @@ For IP-to-location, Chilly uses Free IP API:
 Chilly also uses Gemini.Cgi, a reusable CGI framework:
 => https://github.com/acidus99/Gemini.Cgi Gemini.Cgi on Github
 
-# Let me see the code!
+## Let me see the code!
 Sure. You can access it via Gemini or HTTP
 => https://github.com/acidus99/ChillyWeather ChillyWeather on Github
 => https://github.com/acidus99/ChillyWeather.Cgi ChillyWeather.Cgi on Github
